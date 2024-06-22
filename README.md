@@ -90,8 +90,6 @@ TRUNCATE TABLE tab_name;
 
 ## [SQL Table Constraints]()
 
-### Example of all CREATE TABLE constraints
-
 ```sql
 CREATE TABLE student_info (
     id        INT NOT NULL,
@@ -106,7 +104,7 @@ CREATE TABLE student_info (
 );
 ```
 
-## [SQL ALTER TABLE Statement]()
+## [ALTER TABLE Statement]()
 
 ```sql
 ALTER TABLE tab_name
@@ -150,7 +148,7 @@ ALTER TABLE tab_name
 DROP CONSTRAINT uk_name;
 ```
 
-## [SQL DELETE Statement]()
+## [DELETE Statement]()
 
 ```sql
 DELETE FROM tab_name;
@@ -160,7 +158,7 @@ DELETE FROM tab_name;
 DELETE FROM tab_name WHERE [condition];
 ```
 
-## [SQL INSERT Query]()
+## [INSERT INTO Statement]()
 
 ```sql
 INSERT INTO tab_name (col1, col2, ..., colN) VALUES (val1, val2, ..., valN);
@@ -174,7 +172,7 @@ INSERT INTO tab_name VALUES (val1, val2, ..., valN);
 INSERT INTO tab_name VALUES (val1, val2, ..., valN), (val1, val2, ..., valN), ..., (val1, val2, ..., valN);
 ```
 
-## [SQL INSERT INTO ... SELECT statement]()
+## [INSERT INTO ... SELECT Statement]()
 
 ```sql
 INSERT INTO first_tab_name [column1, column2, ..., columnN]
@@ -183,14 +181,21 @@ FROM second_tab_name
 WHERE [condition(s)];
 ```
 
-## [SQL INSERT INTO ... TABLE statement]()
+```sql
+INSERT INTO first_table
+SELECT *
+FROM second_table
+WHERE [condition(s)]
+```
+
+## [INSERT INTO ... TABLE Statement]()
 
 ```sql
 INSERT INTO first_table_name
 TABLE second_table_name;
 ```
 
-## [SQL SELECT Query]()
+## [SELECT Statement]()
 
 ```sql
 SELECT * FROM tab_name;
@@ -209,7 +214,7 @@ SELECT column1 AS aliasName, column2, ..., columnN
 FROM table_name;
 ```
 
-## [SQL SELECT ... INTO statement]()
+## [SELECT ... INTO Statement]()
 
 ```sql
 SELECT *
@@ -236,5 +241,17 @@ INTO new_table
 FROM customer LEFT JOIN order ON customer.id = order.customer_id;
 ```
 
+## [UPDATE statement]()
+
+```sql
+UPDATE table_name
+SET column1 = value1, column2 = value2,..., columnN = valueN
+WHERE [condition(s)];
+```
+
+```sql
+UPDATE table_name
+SET age = age + 10, salary = salary + 10000;
+```
 
 
