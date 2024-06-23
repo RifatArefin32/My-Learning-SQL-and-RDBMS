@@ -104,7 +104,7 @@ CREATE TABLE student_info (
 );
 ```
 
-## [ALTER TABLE Statement]()
+## [ALTER TABLE]()
 
 ```sql
 ALTER TABLE tab_name
@@ -148,7 +148,7 @@ ALTER TABLE tab_name
 DROP CONSTRAINT uk_name;
 ```
 
-## [DELETE Statement]()
+## [DELETE]()
 
 ```sql
 DELETE FROM tab_name;
@@ -158,7 +158,7 @@ DELETE FROM tab_name;
 DELETE FROM tab_name WHERE [condition];
 ```
 
-## [INSERT INTO Statement]()
+## [INSERT INTO]()
 
 ```sql
 INSERT INTO tab_name (col1, col2, ..., colN) VALUES (val1, val2, ..., valN);
@@ -172,7 +172,7 @@ INSERT INTO tab_name VALUES (val1, val2, ..., valN);
 INSERT INTO tab_name VALUES (val1, val2, ..., valN), (val1, val2, ..., valN), ..., (val1, val2, ..., valN);
 ```
 
-## [INSERT INTO ... SELECT Statement]()
+## [INSERT INTO ... SELECT]()
 
 ```sql
 INSERT INTO first_tab_name [column1, column2, ..., columnN]
@@ -188,14 +188,14 @@ FROM second_table
 WHERE [condition(s)]
 ```
 
-## [INSERT INTO ... TABLE Statement]()
+## [INSERT INTO ... TABLE]()
 
 ```sql
 INSERT INTO first_table_name
 TABLE second_table_name;
 ```
 
-## [SELECT Statement]()
+## [SELECT]()
 
 ```sql
 SELECT * FROM tab_name;
@@ -214,7 +214,7 @@ SELECT column1 AS aliasName, column2, ..., columnN
 FROM table_name;
 ```
 
-## [SELECT ... INTO Statement]()
+## [SELECT ... INTO]()
 
 ```sql
 SELECT *
@@ -241,7 +241,7 @@ INTO new_table
 FROM customer LEFT JOIN order ON customer.id = order.customer_id;
 ```
 
-## [UPDATE statement]()
+## [UPDATE]()
 
 ```sql
 UPDATE table_name
@@ -254,7 +254,7 @@ UPDATE table_name
 SET age = age + 10, salary = salary + 10000;
 ```
 
-## [DELETE FROM statement]()
+## [DELETE FROM]()
 
 ```sql
 DELETE FROM tab_name
@@ -263,4 +263,18 @@ WHERE [condition(s)];
 ```sql
 DELETE FROM tab_name;
 ```
+```sql
+DELETE customer, order
+FROM customer INNER JOIN order ON order.customer_id = customer.id
+WHERE customer.salary > 2000;
+```
+
+## [ORDER BY ... DESC]()
+
+```sql
+SELECT * FROM tab_name ORDER BY salary DESC;
+```
+
+
+
 
