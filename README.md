@@ -104,6 +104,14 @@ CREATE TABLE student_info (
 );
 ```
 
+## [CREATE TABLE ... AS SELECT]()
+
+```sql
+CREATE TABLE new_table AS
+SELECT column1, column2, ..., columnN
+FROM existing_table;
+```
+
 ## [ALTER TABLE]()
 
 ```sql
