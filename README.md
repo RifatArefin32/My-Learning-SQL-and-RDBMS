@@ -232,7 +232,7 @@ FROM existing_tab_name;
 SELECT column1, column2, ..., columnN
 INTO new_tab_name
 FROM existing_tab_name;
-WHERE [ condition(s) ]
+WHERE [condition(s)]
 ```
 
 ```sql
@@ -254,4 +254,13 @@ UPDATE table_name
 SET age = age + 10, salary = salary + 10000;
 ```
 
+## [DELETE FROM statement]()
+
+```sql
+DELETE FROM tab_name
+WHERE [condition(s)];
+```
+```sql
+DELETE FROM tab_name;
+```
 
