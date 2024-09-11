@@ -23,3 +23,11 @@ There are various components included in this process. These components are −
 A classic query engine handles all the non-SQL queries, but a SQL query engine won't handle logical files. Following is a simple diagram showing the SQL Architecture −
 
 <img src="./images/sql-architecture.jpg" height="300" width="500">
+
+
+
+
+
+
+## References
+- [Tutorials point](https://www.tutorialspoint.com/sql/index.htm)
