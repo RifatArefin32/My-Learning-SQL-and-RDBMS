@@ -19,31 +19,31 @@ USE db_name;
 ```
 
 ```sql
-DROP DATABASE db_name;
+DROP DATABASE db_name; 
 DROP DATABASE IF EXISTS db_name;
 ```
 
 ### Backup and Restore (Linux)
 
-```console
-mysqldump -u root -p db_name > db_name_backup.sql
-mysql -u root -p db_name < db_name_backup.sql
+```bash
+mysqldump -u root -p db_name > db_name_backup.sql   # create backup of a DB
+mysql -u root -p db_name < db_name_backup.sql       # restore from backup
 ```
 
-```console
-mysqldump -u root -p --all-databases > all_databases_backup.sql
-mysql -u root -p < all_databases_backup.sql
+```bash
+mysqldump -u root -p --all-databases > all_databases_backup.sql     # Create backup of all databases
+mysql -u root -p < all_databases_backup.sql                         # restore all databases
 ```
 ### Backup and Restore (Windows) 
 
-```console
-mysqldump -u root -p db_name mytable > C:\backups\db_name_backup.sql
-mysql -u root -p db_name < C:\backups\db_name_backup.sql
+```bash
+mysqldump -u root -p db_name mytable > C:\backups\db_name_backup.sql    # create backup of a DB
+mysql -u root -p db_name < C:\backups\db_name_backup.sql                # restore from backup
 ```
 
-```console
-mysqldump -u root -p --all-databases > C:\backups\all_databases_backup.sql
-mysql -u root -p < C:\backups\all_databases_backup.sql
+```bash
+mysqldump -u root -p --all-databases > C:\backups\all_databases_backup.sql  # create backup of all databases
+mysql -u root -p < C:\backups\all_databases_backup.sql  # restore from backup
 ```
 
 ## [SQL Table]()
