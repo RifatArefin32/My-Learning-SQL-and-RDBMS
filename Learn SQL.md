@@ -32,7 +32,7 @@ A classic query engine handles all the non-SQL queries, but a SQL query engine w
 
 <img src="./images/sql-architecture.jpg" height="300" width="500">
 
-
+To learn how SQL Request-Response cycle works, [click here](./Notes/how_sql_works.md).
 
 
 

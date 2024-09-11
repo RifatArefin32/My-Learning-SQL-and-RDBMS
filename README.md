@@ -1,6 +1,6 @@
 # SQL-My-Cheat-Sheet
 
-This SQL cheat sheet comprises the required commands only. You must go through the contents to learn and understand details. Click the heading of the correspoding section to see details.
+This SQL cheat sheet comprises the required commands only. Let's learn SQL in details from [here](./Learn%20SQL.md).
 
 ## [SQL Database]()
 
