@@ -30,7 +30,7 @@ Here's a breakdown of the key components :
 
 Following is a simple diagram showing the SQL Architecture
 
-<img src="./images/sql-architecture.jpg" height="300" width="500">
+<img src="../images/sql-architecture.jpg" height="300" width="500">
 
 To learn more about how SQL Request-Response cycle works, [click here](./Notes/how_sql_works.md).
 
