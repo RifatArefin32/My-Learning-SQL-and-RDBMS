@@ -1,4 +1,4 @@
-# [SQL Cheat Sheet](./Topics/2_SQL_cheatsheet.md)
+### [My SQL Cheat Sheet *](./Topics/2_SQL_cheatsheet.md)
 
 # Standard Query Language (SQL)
 
