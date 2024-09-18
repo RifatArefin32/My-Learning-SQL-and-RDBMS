@@ -121,6 +121,30 @@ Following are some of the most commonly used constraints available in SQL −
 | ENUM | A string object with a predefined set of values. | 'small', 'medium', 'large' |
 
 
+### Difference between `CHAR` and `VARCHAR` in MySQL
+
+| Attribute | `CHAR` | `VARCHAR` |
+|-----------|--------|-----------|
+| Definition | A **fixed-length** string data type. | A **variable-length** string data type. |
+| Storage | Always uses a fixed amount of space, padded with spaces if the input is shorter than the defined length. | Uses only as much storage as needed for the input, **plus one or two bytes for length storage.** |
+| Performance | `CHAR` can be faster for fixed-length data because it doesn't need to handle variable lengths. | `VARCHAR` is more space-efficient for variable-length data, but slightly slower to access. |
+| Length | Length is defined at table creation and the same amount of storage is used regardless of input size. | The storage size depends on the actual input length, with a maximum limit. |
+| Use Case | Best suited for storing short, fixed-length data like country codes (`'USA'`, `'UK'`). | Ideal for storing variable-length data like names, email addresses, etc. |
+
+### Example
+
+```sql
+CREATE TABLE example_table (
+    name VARCHAR (20)
+    code CHAR(5)
+);
+
+INSERT INTO example_table (name, code) VALUES ('John Doe', 'ABC');
+```
+
+**Here,** 
+- VARCHAR(20), here 20 specifies the maximum number of characters that can be stored in that column. That means it can store any string with 0 to 20 characters. For example, 'John' (4 characters) or 'VeryLongString' (14 characters).
+- CHAR(5), If we insert `'ABC'`, MySQL will store it as `'ABC '` (padded with 2 spaces to make it 5 characters).
 
 
 
