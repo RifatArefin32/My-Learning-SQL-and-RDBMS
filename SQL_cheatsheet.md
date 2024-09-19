@@ -1,6 +1,6 @@
 # SQL-My-Cheat-Sheet
 
-This SQL cheat sheet comprises the required commands only. Let's learn SQL in details from [here](./Learn%20SQL.md).
+This SQL cheat sheet comprises the required commands only. Let's learn SQL in details from [here](https://www.tutorialspoint.com/sql/index.htm).
 
 ## [SQL Database]()
 
@@ -24,7 +24,7 @@ DROP DATABASE IF EXISTS db_name;
 ```
 
 ### Backup and Restore (Linux)
-
+From linux terminal,
 ```bash
 mysqldump -u root -p db_name > db_name_backup.sql   # create backup of a DB
 mysql -u root -p db_name < db_name_backup.sql       # restore from backup

@@ -1,4 +1,4 @@
-### [My SQL Cheat Sheet *](./Topics/2_SQL_cheatsheet.md)
+### [My SQL Cheat Sheet *](./SQL_cheatsheet.md)
 
 # Standard Query Language (SQL)
 
@@ -6,7 +6,7 @@ SQL is the standard language for any Relational Database System. All the Relatio
 
 ## Contents
 - [x] [SQL Basic Concepts](./Topics/1_sql_basic_concepts.md)
-- [x] [SQL Syntax My Cheat Sheet](./Topics/2_SQL_cheatsheet.md)
+- [x] [SQL Syntax My Cheat Sheet](./Topics/2_SQL_Commands.md)
 
 ## References
 - [Tutorials point](https://www.tutorialspoint.com/sql/index.htm)
