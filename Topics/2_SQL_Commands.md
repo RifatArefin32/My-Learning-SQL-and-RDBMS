@@ -1,12 +1,13 @@
 # Necessary SQL Syntax and Commands
 ### Contents
 - [SQL Database](#sql-database)
+- [SQL Table](#sql-tables)
 - [SQL Wildcards](#sql-wildcards)
 
 # SQL Database
 
-## Database Creation and Deletion
-To create database, we to first enter into MySQL UI or in our terminal. From terminal enter the following command : 
+## Database Creation
+To create database, we to first enter into MySQL UI or in our terminal. Enter the following command in terminal.  
 ```bash
 mysql -u root -p
 ```
@@ -38,7 +39,8 @@ To work further on `testDB` database, we must select it using the following comm
 USE testDB;
 ```
 
-To delete database,
+## Database Deletion
+
 ```bash
 DROP DATABASE testDB;           # Returns error if not exists
 DROP DATABASE IF EXISTS testDB; # No error returns
@@ -69,6 +71,7 @@ There is a hack to change the database name :
 
 
 # SQL Tables
+
 ## SQL Constraints
 Constraints are the rules enforced on data columns of a table. Constraints can either be column level or table level. 
 - Column level constraints are applied only to one column.
@@ -87,7 +90,13 @@ Following are some of the most commonly used constraints available in SQL −
 | INDEX | Used to create and retrieve data from the database very quickly. |
 
 ## Table Creation
-Before create a table, we must ensure that our specific database has been selected where the table should be stored. Now let's create a table `employee` with the possible constraints.
+Before create a table, we must ensure that our specific database has been selected where the table should be stored. 
+
+```bash
+USE testDB;
+```
+
+Now let's create a table `employee` with the possible constraints.
 
 ```bash
 CREATE TABLE employee (
@@ -101,16 +110,19 @@ CREATE TABLE employee (
 ```
 
 Now we can see all the tables of the database and check our table has been created or not.
+
 ```sql
 SHOW TABLES;
 ```
 
-We can see the description of a table. Let's see the description of our `employee` table.
+We can see the describe our `employee` table i.e. show the structure of the table.
+
 ```sql
 DESC employee;
 ```
 
 One important thing is, if we want to create a table which already exists, it'll generate an error. To avoid error we can use `IF NOT EXISTS` clause. Now we'll create another table `salary`
+
 ```bash 
 CREATE TABLE IF NOT EXISTS salary(
     id INT NOT NULL,
@@ -158,7 +170,7 @@ CREATE TABLE course_attendance (
 );
 ```
 ### Example
-### enrollment table
+### `enrollment` table
 | student_id | course_id | semester   | enrollment_date | grade |
 |------------|-----------|------------|-----------------|-------|
 | 1001       | 501       | Fall2024   | 2024-08-15      | A     |
@@ -167,7 +179,7 @@ CREATE TABLE course_attendance (
 | 1003       | 503       | Fall2024   | 2024-08-17      | A-    |
 | 1002       | 504       | Spring2025 | 2025-01-12      |       |
 
-### course_attendance table
+### `course_attendance` table
 | attendance_id | student_id | course_id | semester    | attendanceDate | status  |
 |---------------|------------|-----------|-------------|----------------|---------|
 | 1             | 1001       | 501       | Fall2024    | 2024-09-01     | Present |
@@ -176,6 +188,59 @@ CREATE TABLE course_attendance (
 | 4             | 1002       | 501       | Fall2024    | 2024-09-01     | Present |
 | 5             | 1003       | 503       | Fall2024    | 2024-09-05     | Present |
 | 6             | 1002       | 504       | Spring2025  | 2025-02-01     | Present |
+
+## Rename Table
+
+```sql
+RENAME TABLE tabname TO new_tabname;
+ALTER TABLE tabname RENAME TO new_tabname;
+```
+
+## Drop Table
+
+The `DROP TABLE` statement is a **Data Definition Language (DDL)** command that is used to remove a table's definition, and its data, indexes, triggers, constraints and permission specifications (if any). SQL `DROP TABLE` command removes an existing table completely in a database. Once SQL `DROP` command is issued then there is no way back to recover the table including its data, so we should be careful before issuing this command in production system.
+
+```bash
+DROP TABLE tabname;        # Returns error if `tabname` table doesn't exist
+DROP TABLE IF EXISTS tabname; # Returns no error
+```
+
+## Truncate Table
+
+`TRUNCATE TABLE` command is used to empty the table completely instead of deleting table records one by one which will be very time consuming and cumbersome process. This command is a sequence of `DROP TABLE` and `CREATE TABLE` statements and requires the `DROP privilege`.
+
+```sql
+TRUNCATE TABLE tabnamae;
+```
+
+**Note :** There is no `IF EXISTS` clause with `TRUNCATE`.
+
+## Delete Table
+The `DELETE` is a command of **Data Manipulation Language (DML)**, so it does not delete or modify the table structure but it delete the existing records from the table. Therefore, any constraints, indexes, or triggers defined in the table will still exist after you delete data from it.
+- To delete only the specific number of rows from the table, we can use the `WHERE` clause with the `DELETE` statement. 
+- Without `WHERE` clause, All rows in the table will be deleted. 
+
+**Note :** The SQL `DELETE` statement operates on a single table at a time.
+
+```bash
+DELETE TABLE tabname;   # Delelte all records of a table 
+DELETE TABLE tabname WHERE [condition];     # Delete specific records of a table based on condition
+```
+
+## DROP vs DELETE vs TRUNCATE
+
+| Feature | `DROP` | `DELETE` | `TRUNCATE` |
+|---------|--------|----------|------------|
+| **Operation Type** | DDL (Data Definition Language) | DML (Data Manipulation Language) | DDL (Data Definition Language) |
+| **Purpose** | Removes the entire table, including its structure and data | Deletes specific rows from the table | Removes all rows from the table |
+| **Impact on Table Structure** | Table structure and data are completely removed | Table structure remains intact; only selected data is affected | Table structure remains intact; only all data is removed |
+| **Can Specify Conditions** | No | Yes, using `WHERE` clause | No |
+| **Affects Table Constraints** | Yes, all constraints are removed | No | No |
+| **Auto-increment Reset +** | Yes | No | Yes, resets auto-increment counter |
+| **Transaction Handling** | Causes an implicit commit; cannot be rolled back | Can be rolled back if inside a transaction | Causes an implicit commit; cannot be rolled back |
+| **Space Reclamation** | Frees up space occupied by the table and its indexes | Does not reclaim space; leaves table structure intact | Reclaims the space of the data but keeps table structure |
+| **Permissions Required** | `ALTER` on the table and `CONTROL` on the schema | `DELETE` permission on the table | `ALTER` permission on the table |
+| **Usage Scenario** | When you want to completely remove a table from the database | When you want to remove specific rows from a table | When you want to quickly remove all data from a table without affecting its structure |
 
 
 

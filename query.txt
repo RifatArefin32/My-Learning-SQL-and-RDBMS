@@ -1,25 +1,3 @@
-## SQL-Database ##
-
-CREATE DATABASE dbname;
-CREATE DATABASE IF NOT EXISTS dbname;
-
-SHOW DATABASES;
-SHOW DATABASES LIKE '%test%';
-
-USE dbname;
-
-DROP DATABASE dbname;
-DROP DATABASE IF EXISTS dbname;
-
-mysqldump -u root -p dbname > dbname_backup.sql 
-mysql -u root -p dbname < dbname_backup.sql 
-
-mysqldump -u root -p --all-datbases > all_db.sql 
-mysql -u root -p < all_db.sql 
-
-CREATE TABLE tbname (
-    id INT NOT NULL,
-    name VARCHAR (255) NOT NULL, 
-    email VARCHAR (30) NOT NULL,
-    
-);
+SQL TABLE
+    - Clone tables
+    - Temporary tables
