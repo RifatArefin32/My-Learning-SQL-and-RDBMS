@@ -5,7 +5,7 @@ Content :
 
 # SQL Database
 
-### Database Creation and Usage
+## Database Creation and Usage
 To create database, we to first enter into MySQL UI or in our terminal. From terminal enter the following command : 
 ```bash
 mysql -u root -p
@@ -38,7 +38,7 @@ To work further on `testDB` database, we must select it using the following comm
 USE testDB;
 ```
 
-### Backup Database
+## Backup Database
 We can backup a specific database and all the databases. Again we can restore them from the backups. To do so, we need to open our `terminal` and drop necessary commands.
 
 ```bash
@@ -52,7 +52,7 @@ mysql -u root -p < allDB_backup.sql     # Restore all DBs from backup
 ```
 **Note :** The backup files are stored where we open our terminal. Otherwise we have to specify the path along with the backup file name. For instance, `C:\backups\db_name_backup.sql` 
 
-### Rename Database
+## Rename Database
 There is a hack to change the database name :
 - First take a backup of a particular database
 - Drop this database from the server
