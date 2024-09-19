@@ -1,5 +1,5 @@
 # Necessary SQL Syntax and Commands
-Content :
+### Contents
 - [SQL Database](#sql-database)
 - [SQL Wildcards](#sql-wildcards)
 
