@@ -5,7 +5,7 @@ Content :
 
 # SQL Database
 
-## Database Creation and Usage
+## Database Creation and Deletion
 To create database, we to first enter into MySQL UI or in our terminal. From terminal enter the following command : 
 ```bash
 mysql -u root -p
@@ -36,6 +36,12 @@ SHOW DATABASES LIKE '%test%';
 To work further on `testDB` database, we must select it using the following command :
 ```sql
 USE testDB;
+```
+
+To delete database,
+```bash
+DROP DATABASE testDB;           # Returns error if not exists
+DROP DATABASE IF EXISTS testDB; # No error returns
 ```
 
 ## Backup Database
