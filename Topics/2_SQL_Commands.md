@@ -67,6 +67,118 @@ There is a hack to change the database name :
 
 
 
+
+# SQL Tables
+## SQL Constraints
+Constraints are the rules enforced on data columns of a table. Constraints can either be column level or table level. 
+- Column level constraints are applied only to one column.
+- Table level constraints are applied to the entire table.
+
+Following are some of the most commonly used constraints available in SQL −
+
+| Constatints | Description |
+|-------------|-------------|
+| NOT NULL | Ensures that a column cannot have a NULL value. |
+| DEFAULT | Provides a default value for a column when none is specified. |
+| CHECK | Ensures that all values in a column satisfy certain conditions. |
+| UNIQUE Key | Ensures that all the values in a column are different. |
+| PRIMARY Key | Uniquely identifies each row/record in a database table. |
+| FOREIGN Key | Uniquely identifies a row/record in any another database table. Creates a relation with another table |
+| INDEX | Used to create and retrieve data from the database very quickly. |
+
+## Table Creation
+Before create a table, we must ensure that our specific database has been selected where the table should be stored. Now let's create a table `employee` with the possible constraints.
+
+```bash
+CREATE TABLE employee (
+    id INT NOT NULL, # record id must have a value
+    name VARCHAR (50) DEFAULT "Not available", # default value will be stored if `name` is missing while inserting a record
+    employee_id VARCHAR (10) NOT NULL UNIQUE, # e.g. BS1511, BS1512 etc..
+    age INT NOT NULL CHECK(age >= 18), # Employee's age must be greater than 18
+    
+    PRIMARY KEY (id)
+);
+```
+
+Now we can see all the tables of the database and check our table has been created or not.
+```sql
+SHOW TABLES;
+```
+
+We can see the description of a table. Let's see the description of our `employee` table.
+```sql
+DESC employee;
+```
+
+One important thing is, if we want to create a table which already exists, it'll generate an error. To avoid error we can use `IF NOT EXISTS` clause. Now we'll create another table `salary`
+```bash 
+CREATE TABLE IF NOT EXISTS salary(
+    id INT NOT NULL,
+    employee_id INT NOT NULL,
+    gross_salary DECIMAL (10, 2) NOT NULL,
+    medical_allowance DECIMAL (10, 2) DEFAULT 0.00, 
+    house_allowance DECIMAL (10, 2) DEFAULT 0.00,
+    festival_bonus DECIMAL (10, 2) DEFAULT 0.00,
+    total DECIMAL (10, 2) NOT NULL,
+
+    PRIMARY KEY (id),
+    FOREIGN KEY (employee_id) REFERENCES employee (id)  # `employee_id` creates a relationship with column `id` of `employee` table
+); 
+```
+
+Let's see another example where multiple columns are used as `PRIMARY KEY`. (Also called `Composite Key`). 
+
+*Consider a scenario with students enrolling in various courses across multiple semesters. Here, a student's enrollment in a specific course during a specific semester would be uniquely identified by a combination of three columns: `StudentID, CourseID, and Semester`.*
+
+Here, 
+- A student can enroll in multiple courses across different semesters (`enrollment` table).
+- For each enrolled course, attendance is tracked (`course_attendance` table).
+
+Create the Enrollment Table with a Composite Primary Key
+```sql
+CREATE TABLE enrollment (
+    student_id INT,
+    course_id INT,
+    semester VARCHAR(10),
+    enrollment_date DATE,
+    grade CHAR(2),
+    PRIMARY KEY (student_id, course_id, semester)
+);
+```
+
+```sql
+CREATE TABLE course_attendance (
+    attendance_id INT PRIMARY KEY,
+    student_id INT,
+    course_id INT,
+    semester VARCHAR(10),
+    attendance_date DATE,
+    status VARCHAR(10),
+    FOREIGN KEY (student_id, course_id, semester) REFERENCES enrollment(student_id, course_id, semester)
+);
+```
+### Example
+### enrollment table
+| student_id | course_id | semester   | enrollment_date | grade |
+|------------|-----------|------------|-----------------|-------|
+| 1001       | 501       | Fall2024   | 2024-08-15      | A     |
+| 1001       | 502       | Fall2024   | 2024-08-16      | B+    |
+| 1002       | 501       | Fall2024   | 2024-08-15      | B     |
+| 1003       | 503       | Fall2024   | 2024-08-17      | A-    |
+| 1002       | 504       | Spring2025 | 2025-01-12      |       |
+
+### course_attendance table
+| attendance_id | student_id | course_id | semester    | attendanceDate | status  |
+|---------------|------------|-----------|-------------|----------------|---------|
+| 1             | 1001       | 501       | Fall2024    | 2024-09-01     | Present |
+| 2             | 1001       | 501       | Fall2024    | 2024-09-03     | Absent  |
+| 3             | 1001       | 502       | Fall2024    | 2024-09-01     | Present |
+| 4             | 1002       | 501       | Fall2024    | 2024-09-01     | Present |
+| 5             | 1003       | 503       | Fall2024    | 2024-09-05     | Present |
+| 6             | 1002       | 504       | Spring2025  | 2025-02-01     | Present |
+
+
+
 # SQL Wildcards
 
 SQL Wildcards are special characters used as substitutes for one or more characters in a string. They are used with the `LIKE` operator in SQL, to search for specific patterns.
