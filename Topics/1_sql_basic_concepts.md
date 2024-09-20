@@ -32,9 +32,7 @@ Following is a simple diagram showing the SQL Architecture
 
 <img src="../images/sql-architecture.jpg" height="300" width="500">
 
-To learn more about how SQL Request-Response cycle works, [click here](./Notes/how_sql_works.md).
-
-
+To learn more about how SQL Request-Response cycle works, [click here](../Notes/how_sql_works.md).
 
 ## RDBMS Concepts
 A Relational database management system (RDBMS) is a database management system (DBMS) that is based on the relational model as introduced by E. F. Codd in 1970.
@@ -155,7 +153,5 @@ See data-type of different database systems from [here](https://www.tutorialspoi
 
 
 
-
-
-## References
+# References
 - [Tutorials point](https://www.tutorialspoint.com/sql/index.htm)
