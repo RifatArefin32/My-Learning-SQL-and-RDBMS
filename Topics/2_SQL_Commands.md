@@ -229,18 +229,18 @@ DELETE TABLE tabname WHERE [condition];     # Delete specific records of a table
 
 ## DROP vs DELETE vs TRUNCATE
 
-| Feature | `DROP` | `DELETE` | `TRUNCATE` |
+| **Feature** | **DROP** | **DELETE** | **TRUNCATE** |
 |---------|--------|----------|------------|
 | **Operation Type** | DDL (Data Definition Language) | DML (Data Manipulation Language) | DDL (Data Definition Language) |
 | **Purpose** | Removes the entire table, including its structure and data | Deletes specific rows from the table | Removes all rows from the table |
 | **Impact on Table Structure** | Table structure and data are completely removed | Table structure remains intact; only selected data is affected | Table structure remains intact; only all data is removed |
 | **Can Specify Conditions** | No | Yes, using `WHERE` clause | No |
 | **Affects Table Constraints** | Yes, all constraints are removed | No | No |
-| **Auto-increment Reset +** | Yes | No | Yes, resets auto-increment counter |
+| **Auto-increment Reset** | Yes | No | Yes, resets auto-increment counter |
 | **Transaction Handling** | Causes an implicit commit; cannot be rolled back | Can be rolled back if inside a transaction | Causes an implicit commit; cannot be rolled back |
 | **Space Reclamation** | Frees up space occupied by the table and its indexes | Does not reclaim space; leaves table structure intact | Reclaims the space of the data but keeps table structure |
 | **Permissions Required** | `ALTER` on the table and `CONTROL` on the schema | `DELETE` permission on the table | `ALTER` permission on the table |
-| **Usage Scenario** | When you want to completely remove a table from the database | When you want to remove specific rows from a table | When you want to quickly remove all data from a table without affecting its structure |
+
 
 
 
