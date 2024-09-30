@@ -3,6 +3,7 @@
 - [SQL Database](#sql-database)
 - [SQL Table](#sql-tables)
 - [SQL INSERT INTO Statement](#sql-insert-into-statement)
+- [SQL SELEECT statement](#sql-select-statement)
 - [SQL Wildcards](#sql-wildcards)
 
 # SQL Database
@@ -311,7 +312,32 @@ WHERE hire_date < '2020-01-01';
 SELECT * FROM archived_employees;
 ```
 
+### INSERT INTO ... TABLE statement
+If two tables structure are exactly same, then instead of selecting specific columns we can insert the contents of one table into another using the `INSERT INTO ... TABLE` statement.
 
+```sql
+INSERT INTO first_table_name TABLE second_table_name;
+```
+
+# SQL SELECT statement
+The SQL `SELECT` Statement is used to fetch the data from a database table which returns this data in the **form of a table**. These tables are called result-sets.
+
+```sql
+SELECT column1, column2, columnN FROM table_name;
+SELECT * FROM table_name;   --select all data items of the table
+```
+### Aliasing a Column in SELECT Statement
+```sql
+SELECT col1 AS alias1, col2, col3, ...., colN 
+FROM table_name;
+```
+
+In the example below, we are trying to retrieve `customer details` **NAME** and **AGE** in a single column of the resultant table using the `concat()` expression and aliasing the column as `DETAILS` along with the customer addresses from the CUSTOMERS table.
+
+```sql
+SELECT CONCAT(name,' ',age) AS details, address 
+FROM customers;
+```
 
 
 
