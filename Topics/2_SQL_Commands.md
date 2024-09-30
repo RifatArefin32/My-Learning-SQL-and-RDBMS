@@ -373,6 +373,28 @@ WHERE [condition];
 UPDATE customers SET age = age+5, salary = salary+3000;
 ```
 
+
+# SQL DELETE statement
+- The SQL `DELETE` Statement is used to delete the records from an existing table. 
+- In order to filter the records to be deleted (or, delete particular records), we need to use the `WHERE` clause along with the `DELETE` statement.
+- If you execute `DELETE` statement without a WHERE clause, it will delete all the records from the table.
+- Using the `DELETE` statement, we can delete one or more rows of a single table and records across multiple tables.
+
+```sql
+DELETE FROM table_name WHERE [condition];
+```
+```sql
+DELETE FROM customers WHERE id = 6;     --delete single row
+DELETE FROM customers WHERE age > 25;   --delete multiple rows
+```
+
+
+
+
+
+
+
+
 # SQL Wildcards
 
 SQL Wildcards are special characters used as substitutes for one or more characters in a string. They are used with the `LIKE` operator in SQL, to search for specific patterns.
