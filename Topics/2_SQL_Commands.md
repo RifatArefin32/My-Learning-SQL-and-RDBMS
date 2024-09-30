@@ -5,6 +5,8 @@
 - [SQL INSERT INTO Statement](#sql-insert-into-statement)
 - [SQL SELEECT statement](#sql-select-statement)
 - [SQL INSERT INTO ... SELECT statement](#sql-insert-into--select-statement)
+- [SQL UPDATE statement](#sql-update-statement)
+
 - [SQL Wildcards](#sql-wildcards)
 
 # SQL Database
@@ -357,9 +359,19 @@ INSERT INTO buyers
 SELECT * FROM customers;    --Both buyers and customers table structure are same
 ```
 
+# SQL UPDATE statement
+- The SQL `UPDATE` Statement is used to modify the existing records in a table. - This statement is a part of `Data Manipulation Language (DML)`, as it only modifies the data present in a table without affecting the table's structure.
+- The `UPDATE` statement makes use of **locks on each row** while modifying them in a table, and once the row is modified, the lock is released. 
+- It can either make changes to a single row or multiple rows with a single query.
 
+```sql
+UPDATE table_name
+SET column1 = value1, column2 = value2,..., columnN = valueN
+WHERE [condition];
 
-
+--Update multiple rows and columns
+UPDATE customers SET age = age+5, salary = salary+3000;
+```
 
 # SQL Wildcards
 
