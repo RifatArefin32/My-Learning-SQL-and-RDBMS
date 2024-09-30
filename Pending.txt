@@ -1,3 +1,8 @@
 SQL TABLE
     - Clone tables
     - Temporary tables
+
+SQL Queries
+    - SQL - SORTING Results
+
+SQL Operators and Clause

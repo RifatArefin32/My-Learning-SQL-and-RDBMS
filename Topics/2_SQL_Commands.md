@@ -1,5 +1,5 @@
 # Necessary SQL Syntax and Commands
-### Contents
+## Contents
 - [SQL Database](#sql-database)
     - [Create, show and use database](#database-creation)
     - [Delete database](#database-deletion)
@@ -19,7 +19,9 @@
 - [SQL SELEECT statement](#sql-select-statement)
 - [SQL UPDATE statement](#sql-update-statement)
 - [SQL DELETE statement](#sql-delete-statement)
-
+    - [Delete from a single table](#delete-from-single-table)
+    - [Delete from multiple table](#delete-from-multiple-tables)
+- [SQL Operators and clauses](#)
 
 - [SQL Wildcards](#sql-wildcards)
 
@@ -365,11 +367,11 @@ UPDATE customers SET age = age+5, salary = salary+3000; --Update multiple rows a
 
 
 # SQL DELETE statement
-- The SQL `DELETE` Statement is used to delete the records from an existing table. 
+- Using the `DELETE` statement, we can delete one or more rows of a single table and records across multiple tables.
 - In order to filter the records to be deleted (or, delete particular records), we need to use the `WHERE` clause along with the `DELETE` statement.
 - If you execute `DELETE` statement without a WHERE clause, it will delete all the records from the table.
-- Using the `DELETE` statement, we can delete one or more rows of a single table and records across multiple tables.
 
+## Delete from single table
 ```sql
 DELETE FROM table_name WHERE [condition];
 ```
@@ -379,8 +381,226 @@ DELETE FROM customers WHERE age > 25;   --delete multiple rows
 DELETE FROM customers;                  --delete all rows
 ```
 
+## Delete from multiple tables
+To delete the records from multiple tables using the `DELETE` query, we will use the `JOIN` clause to combine data from multiple tables.
+
+Suppose there are two tables: `Customers` and `Orders`
+
+### Customers table
+| id | name | age | address | salary |
+|----|------|-----|---------|--------|
+| 1	| Ramesh |	32	| Ahmedabad | 2000.00 |
+| 2 | Khilan |	25 | Delhi | 1500.00 |
+| 3	| Kaushik |	23 | Kota | 2000.00 |
+| 4	| Chaitali | 25 | Mumbai | 6500.00 |
+| 5 | Hardik | 27 | Bhopal | 8500.00 |
+| 7	| Muffy | 24 | Indore | 10000.00 |
+
+### Orders table
+| id |	date | customer_id | amount |
+|-----|------|-------------|--------|
+| 102 |	2009-10-08 | 3 | 3000.00 |
+| 100 |	2009-10-08 | 3 | 1500.00 |
+| 101 |	2009-11-20 | 2 | 1560.00 |
+| 103 |	2008-05-20 | 4 | 2060.00 |
+
+Following SQL query deletes the records of the customers (from the tables CUSTOMERS and ORDERS) who earn more than 2000 and have placed orders:
+
+```sql
+DELETE customers, orders 
+FROM customers INNER JOIN orders ON orders.customer_id = customers.id
+WHERE customers.salary > 2000;
+```
+### Result
+Customer with `id = 4` satisfies the condition and it's entries in both of the tables are deleted.
+
+### Customers table
+| id | name | age | address | salary |
+|----|------|-----|---------|--------|
+| 1	| Ramesh |	32	| Ahmedabad | 2000.00 |
+| 2 | Khilan |	25 | Delhi | 1500.00 |
+| 3	| Kaushik |	23 | Kota | 2000.00 |
+| 5 | Hardik | 27 | Bhopal | 8500.00 |
+| 7	| Muffy | 24 | Indore | 10000.00 |
+
+### Orders table
+| id |	date | customer_id | amount |
+|-----|------|-------------|--------|
+| 102 |	2009-10-08 | 3 | 3000.00 |
+| 100 |	2009-10-08 | 3 | 1500.00 |
+| 101 |	2009-11-20 | 2 | 1560.00 |
 
 
+# SQL Operators and Clauses
+
+## WHERE
+- The SQL `WHERE` clause is used to filter the results obtained by the **DML statements** such as `SELECT`, `UPDATE` and `DELETE` etc. 
+- We can retrieve the data from a single table or multiple tables(after join operation) using the `WHERE` clause.
+
+```sql
+DML_STATEMENT column1, column2,... columnN
+FROM table_name
+WHERE [condition];  --DML_STATEMENT: SELECT, UPDATE, DELETE
+```
+```sql
+SELECT * from customers WHERE age NOT IN (25, 23, 22);
+
+SELECT * FROM customers WHERE name LIKE 'K___%';
+
+SELECT * FROM customers 
+WHERE (age = 25 OR salary < 4500) AND (name = 'Rifat' OR name = 'Rakib');
+```
+
+## LIMIT
+- The `LIMIT` clause is used to specify the number of rows returned by a query. 
+- It helps control the amount of data retrieved, especially in large datasets.
+```sql
+SELECT name, age, department FROM employees LIMIT 5;
+```
+
+## DISTINCT
+- The `DISTINCT` keyword is used in conjunction with the `SELECT` statement to when there is a need to avoid duplicate values present in any specific columns/tables. 
+- When we use `DISTINCT` keyword, `SELECT` statement returns only the unique records available in the table.
+
+### Customers Table
+
+| id | name | age | address | salary |
+|----|------|-----|---------|--------|
+| 1	| Ramesh |	32	| Ahmedabad | 2000.00 |
+| 2 | Khilan |	25 | Delhi | 1500.00 |
+| 3	| Kaushik |	23 | NULL | 2000.00 |
+| 4	| Chaitali | 25 | NULL | 6500.00 |
+| 5 | Hardik | 27 | Bhopal | 8500.00 |
+| 6	| Komal | 22 | Hyderabad | 4500.00 |
+| 7	| Muffy | 24 | Indore | 10000.00 |
+
+```sql
+SELECT DISTINCT salary FROM customers;
+```
+| salary |
+|--------|
+| 2000.00 |
+| 1500.00 |
+| 6500.00 |
+| 8500.00 |
+| 4500.00 |
+| 10000.00 |
+
+```sql
+SELECT DISTINCT age, salary FROM customers;
+```
+| age | salary |
+|-----|--------|
+| 32 | 2000.00 |
+| 25 | 1500.00 |
+| 23 | 2000.00 |
+| 25 | 6500.00 |
+| 27 | 8500.00 |
+| 22 | 4500.00 |
+| 24 | 10000.00 |
+
+In the above result, `salary = 2000.00` and `age = 25` appear multiple times. But the combination of each `(age, salary)` is unique.
+
+```sql
+SELECT COUNT(DISTINCT age) as unique_age  FROM customers; --Output: 6
+```
+
+### DISTINCT keyword with NULL value
+In SQL, when there are NULL values in the column, `DISTINCT` treats them as unique values and includes them in the result set. 
+
+```sql
+SELECT DISTINCT address FROM customers;
+```
+|address|
+|-------|
+|Ahmedabad|
+|Delhi|
+|NULL|
+|Bhopal|
+|Hyderabad|
+|Indore|
+
+## ORDER BY 
+`ORDER BY` clause is used to sort the data in either ascending or descending order, based on one or more columns. `ORDER BY` is used with the SQL SELECT statement and is usually specified after the WHERE, HAVING, and GROUP BY clauses.
+
+Following are the important points about ORDER BY Clause −
+- Some databases sort the query results in an ascending order by default.
+- To sort the data in ascending order, we use the keyword `ASC`.
+- To sort the data in descending order, we use the keyword `DESC`.
+
+```sql
+SELECT column-list
+FROM table_name
+ORDER BY column1, column2, .. columnN [ASC | DESC];
+```
+### Customers Table
+| id | name | age | address | salary |
+|----|------|-----|---------|--------|
+| 1	| Ramesh |	32	| Ahmedabad | 2000.00 |
+| 2 | Khilan |	25 | Delhi | 1500.00 |
+| 3	| Kaushik |	23 | Kota | 2000.00 |
+| 4	| Chaitali | 25 | Mumbai | 6500.00 |
+| 5 | Hardik | 27 | Bhopal | 8500.00 |
+| 6	| Komal | 22 | Hyderabad | 4500.00 |
+| 7	| Muffy | 24 | Indore | 10000.00 |
+
+```sql
+SELECT * FROM CUSTOMERS ORDER BY age ASC; --order by single column
+```
+### Result
+| id | name | age | address | salary |
+|----|------|-----|---------|--------|
+| 6	| Komal | 22 | Hyderabad | 4500.00 |
+| 3	| Kaushik |	23 | Kota | 2000.00 |
+| 7	| Muffy | 24 | Indore | 10000.00 |
+| 2 | Khilan |	25 | Delhi | 1500.00 |
+| 4	| Chaitali | 25 | Mumbai | 6500.00 || 5 | Hardik | 27 | Bhopal | 8500.00 |
+| 1	| Ramesh |	32	| Ahmedabad | 2000.00 |
+
+```sql
+SELECT * FROM customers ORDER BY age ASC, salary DESC; --order by multiple columns
+```
+### Result
+| id | name | age | address | salary |
+|----|------|-----|---------|--------|
+| 6	| Komal | 22 | Hyderabad | 4500.00 |
+| 3	| Kaushik |	23 | Kota | 2000.00 |
+| 7	| Muffy | 24 | Indore | 10000.00 |
+| 4	| Chaitali | 25 | Mumbai | 6500.00 |
+| 2 | Khilan |	25 | Delhi | 1500.00 |
+| 5 | Hardik | 27 | Bhopal | 8500.00 |
+| 1	| Ramesh |	32	| Ahmedabad | 2000.00 |
+
+### Order by preferred order
+- One can also sort the data in a database table in a preferred order using the `CASE` statement within the `ORDER BY` clause.
+- All the values are specified in the clause along with the position they are supposed to be sorted in.
+- if the values are not given any number, they are automatically sorted in ascending order.
+
+```sql
+SELECT * FROM customers ORDER BY (
+    CASE address
+        WHEN 'Mumbai' THEN 1
+        WHEN 'Delhi' THEN 2
+        WHEN 'Hyderabad' THEN 3
+        WHEN 'Ahmedabad' THEN 4
+        WHEN 'Indore' THEN 5
+        WHEN 'Bhopal' THEN 6
+        WHEN 'Kota' THEN 7
+        ELSE 100 
+    END
+);
+```
+
+### Result
+| id | name | age | address | salary |
+|----|------|-----|---------|--------|
+| 4	| Chaitali | 25 | Mumbai | 6500.00 |
+| 2 | Khilan |	25 | Delhi | 1500.00 |
+| 6	| Komal | 22 | Hyderabad | 4500.00 |
+| 1	| Ramesh |	32	| Ahmedabad | 2000.00 |
+| 7	| Muffy | 24 | Indore | 10000.00 |
+| 5 | Hardik | 27 | Bhopal | 8500.00 |
+| 3	| Kaushik |	23 | Kota | 2000.00 |
 
 
 
