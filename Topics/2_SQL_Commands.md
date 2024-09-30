@@ -2,6 +2,7 @@
 ### Contents
 - [SQL Database](#sql-database)
 - [SQL Table](#sql-tables)
+- [SQL INSERT INTO Statement](#sql-insert-into-statement)
 - [SQL Wildcards](#sql-wildcards)
 
 # SQL Database
@@ -240,6 +241,80 @@ DELETE TABLE tabname WHERE [condition];     # Delete specific records of a table
 | **Transaction Handling** | Causes an implicit commit; cannot be rolled back | Can be rolled back if inside a transaction | Causes an implicit commit; cannot be rolled back |
 | **Space Reclamation** | Frees up space occupied by the table and its indexes | Does not reclaim space; leaves table structure intact | Reclaims the space of the data but keeps table structure |
 | **Permissions Required** | `ALTER` on the table and `CONTROL` on the schema | `DELETE` permission on the table | `ALTER` permission on the table |
+
+
+
+
+# SQL INSERT INTO Statement
+The SQL `INSERT INTO` Statement is used to add new rows of data into a table in the database. Almost all the RDBMS provide this SQL query to add the records in database tables
+
+Syntax :
+
+```sql
+INSERT INTO tabname (col1, col2, col3, ..., colN) VALUES (val1, val2, val3, ..., valN);
+```
+
+If we want to add values of all the columns, 
+
+```sql 
+INSERT INTO tabname VALUES (val1, val2, val3, ..., valN);
+```
+
+## Inserting Data Into a Table Using Another Table
+- Using `INSERT INTO ... SELECT` statement
+- Using `INSERT INTO ... TABLE` statement
+
+### INSERT INTO ... SELECT 
+
+```bash
+INSERT INTO first_tabname (col1, col2, col3, ..., colN) 
+SELECT (col1, col2, col3, ..., colN) FROM second_tabname 
+WHERE [condition(s)];   #condition is optional
+```
+
+### Example
+
+```sql
+-- Create the employees table
+CREATE TABLE employees (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    position VARCHAR(50),
+    salary DECIMAL(10, 2),
+    hire_date DATE
+);
+
+-- Insert some sample data into the employees table
+INSERT INTO employees (name, position, salary, hire_date)
+VALUES 
+('John Doe', 'Software Engineer', 75000.00, '2020-01-15'),
+('Jane Smith', 'Project Manager', 85000.00, '2018-03-10'),
+('Alice Johnson', 'QA Engineer', 65000.00, '2019-05-22'),
+('Bob Brown', 'UX Designer', 70000.00, '2021-07-30');
+
+-- Create the archived_employees table
+CREATE TABLE archived_employees (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    position VARCHAR(50),
+    salary DECIMAL(10, 2),
+    hire_date DATE
+);
+
+-- Use INSERT INTO ... SELECT to copy employees hired before 2020 to the archived_employees table
+INSERT INTO archived_employees (id, name, position, salary, hire_date)
+SELECT id, name, position, salary, hire_date
+FROM employees
+WHERE hire_date < '2020-01-01';
+
+-- Check the data in the archived_employees table
+SELECT * FROM archived_employees;
+```
+
+
+
+
+
 
 
 
