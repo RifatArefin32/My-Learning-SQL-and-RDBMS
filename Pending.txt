@@ -6,3 +6,16 @@ SQL Queries
     - SQL - SORTING Results
 
 SQL Operators and Clause
+
+
+
+
+
+
+
+--------------------cheat sheet
+
+
+
+[CREATE TABLE ... AS SELECT]
+The SQL Select Into Statement

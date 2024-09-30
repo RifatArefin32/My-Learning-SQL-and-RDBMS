@@ -603,6 +603,20 @@ SELECT * FROM customers ORDER BY (
 | 3	| Kaushik |	23 | Kota | 2000.00 |
 
 
+## GROUP BY
+- The SQL `GROUP BY` clause is used in conjunction with the SELECT statement to arrange identical data into groups. 
+- This clause follows the `WHERE` clause and precedes the `ORDER BY` and `HAVING` clauses (if they exist).
+- The main purpose of grouping the records of a table based on particular columns is to perform calculations on these groups. 
+- Therefore, The `GROUP BY` clause is typically used with `aggregate functions` such as `SUM()`, `COUNT()`, `AVG()`, `MAX()`, or `MIN()` etc.
+
+### Example
+If we have a table named `sales_data` containing the sales data with the columns `year`, `product`, and `sales`. To calculate the total sales in an year, the `GROUP BY` clause can be used to group the records in this table based on the `year` and calculate the sum of sales in each group using the `SUM()` function.
+
+```sql
+SELECT SUM(sales) AS total, year FROM sales_data GROUP BY year;
+```
+Syntax
+Following is the basic syntax of the SQL GROUP BY clause −
 
 
 
