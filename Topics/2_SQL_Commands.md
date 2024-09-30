@@ -1,11 +1,25 @@
 # Necessary SQL Syntax and Commands
 ### Contents
 - [SQL Database](#sql-database)
+    - [Create, show and use database](#database-creation)
+    - [Delete database](#database-deletion)
+    - [Backup database](#backup-database)
+    - [Rename database](#rename-database)
 - [SQL Table](#sql-tables)
+    - [SQL constraints](#sql-constraints)
+    - [Create database table](#table-creation)
+    - [Rename table](#rename-table)
+    - [Drop table](#drop-table)
+    - [Truncate table](#truncate-table)
+    - [Delete table](#delete-table)
+    - [Drop vs Delete vs Truncate](#drop-vs-delete-vs-truncate)
 - [SQL INSERT INTO Statement](#sql-insert-into-statement)
+    - [Inserting data into a table](#inserting-data-into-a-table)
+    - [Inserting data into a table using another table](#inserting-data-into-a-table-using-another-table)
 - [SQL SELEECT statement](#sql-select-statement)
-- [SQL INSERT INTO ... SELECT statement](#sql-insert-into--select-statement)
 - [SQL UPDATE statement](#sql-update-statement)
+- [SQL DELETE statement](#sql-delete-statement)
+
 
 - [SQL Wildcards](#sql-wildcards)
 
@@ -19,9 +33,9 @@ mysql -u root -p
 Here `root` is our user name and after that we have to enter our password.
 
 Now we will create a database named `testDB`.
-```bash
-CREATE DATABASE testDB;    # Returns error if it already exists
-CREATE DATABASE IF NOT EXISTS testDB; # No error returns
+```sql
+CREATE DATABASE testDB;                 --Returns error if it already exists
+CREATE DATABASE IF NOT EXISTS testDB;   --No error returns
 ```
 To see all existing databases in the server, 
 ```sql
@@ -46,9 +60,9 @@ USE testDB;
 
 ## Database Deletion
 
-```bash
-DROP DATABASE testDB;           # Returns error if not exists
-DROP DATABASE IF EXISTS testDB; # No error returns
+```sql
+DROP DATABASE testDB;               --Returns error if not exists
+DROP DATABASE IF EXISTS testDB;     --No error returns
 ```
 
 ## Backup Database
@@ -97,38 +111,33 @@ Following are some of the most commonly used constraints available in SQL −
 ## Table Creation
 Before create a table, we must ensure that our specific database has been selected where the table should be stored. 
 
-```bash
+```sql
 USE testDB;
 ```
 
 Now let's create a table `employee` with the possible constraints.
 
-```bash
+```sql
 CREATE TABLE employee (
-    id INT NOT NULL, # record id must have a value
-    name VARCHAR (50) DEFAULT "Not available", # default value will be stored if `name` is missing while inserting a record
-    employee_id VARCHAR (10) NOT NULL UNIQUE, # e.g. BS1511, BS1512 etc..
-    age INT NOT NULL CHECK(age >= 18), # Employee's age must be greater than 18
+    id INT NOT NULL, --record id must have a value
+    name VARCHAR (50) DEFAULT "Not available", --default value will be stored if `name` is missing while inserting a record
+    employee_id VARCHAR (10) NOT NULL UNIQUE, --e.g. BS1511, BS1512 etc..
+    age INT NOT NULL CHECK(age >= 18), --Employee's age must be greater than 18
     
     PRIMARY KEY (id)
 );
 ```
-
 Now we can see all the tables of the database and check our table has been created or not.
-
 ```sql
 SHOW TABLES;
 ```
-
 We can see the describe our `employee` table i.e. show the structure of the table.
-
 ```sql
 DESC employee;
 ```
-
 One important thing is, if we want to create a table which already exists, it'll generate an error. To avoid error we can use `IF NOT EXISTS` clause. Now we'll create another table `salary`
 
-```bash 
+```sql
 CREATE TABLE IF NOT EXISTS salary(
     id INT NOT NULL,
     employee_id INT NOT NULL,
@@ -139,7 +148,7 @@ CREATE TABLE IF NOT EXISTS salary(
     total DECIMAL (10, 2) NOT NULL,
 
     PRIMARY KEY (id),
-    FOREIGN KEY (employee_id) REFERENCES employee (id)  # `employee_id` creates a relationship with column `id` of `employee` table
+    FOREIGN KEY (employee_id) REFERENCES employee (id)  --`employee_id` creates a relationship with column `id` of `employee` table
 ); 
 ```
 
@@ -162,7 +171,6 @@ CREATE TABLE enrollment (
     PRIMARY KEY (student_id, course_id, semester)
 );
 ```
-
 ```sql
 CREATE TABLE course_attendance (
     attendance_id INT PRIMARY KEY,
@@ -195,41 +203,40 @@ CREATE TABLE course_attendance (
 | 6             | 1002       | 504       | Spring2025  | 2025-02-01     | Present |
 
 ## Rename Table
-
 ```sql
-RENAME TABLE tabname TO new_tabname;
-ALTER TABLE tabname RENAME TO new_tabname;
+RENAME TABLE tabname TO new_tabname;    --using RENAME TABLE statement
+ALTER TABLE tabname RENAME TO new_tabname;  --using ALTER TABLE statement
 ```
 
 ## Drop Table
+- The `DROP TABLE` statement is a **Data Definition Language (DDL)** command that is used to remove a table's definition, and its data, indexes, triggers, constraints and permission specifications (if any). 
+- SQL `DROP TABLE` command removes an existing table completely in a database. - Once SQL `DROP` command is issued then there is no way back to recover the table including its data.
 
-The `DROP TABLE` statement is a **Data Definition Language (DDL)** command that is used to remove a table's definition, and its data, indexes, triggers, constraints and permission specifications (if any). SQL `DROP TABLE` command removes an existing table completely in a database. Once SQL `DROP` command is issued then there is no way back to recover the table including its data, so we should be careful before issuing this command in production system.
-
-```bash
-DROP TABLE tabname;        # Returns error if `tabname` table doesn't exist
-DROP TABLE IF EXISTS tabname; # Returns no error
+```sql
+DROP TABLE tabname;        --Returns error if `tabname` table doesn't exist
+DROP TABLE IF EXISTS tabname; --Returns no error
 ```
 
 ## Truncate Table
-
-`TRUNCATE TABLE` command is used to empty the table completely instead of deleting table records one by one which will be very time consuming and cumbersome process. This command is a sequence of `DROP TABLE` and `CREATE TABLE` statements and requires the `DROP privilege`.
+- `TRUNCATE TABLE` command is used to empty the table completely instead of deleting table records one by one which will be very time consuming and cumbersome process. 
+- This command is a sequence of `DROP TABLE` and `CREATE TABLE` statements and requires the `DROP privilege`.
 
 ```sql
-TRUNCATE TABLE tabnamae;
+TRUNCATE TABLE table_name;
 ```
-
-**Note :** There is no `IF EXISTS` clause with `TRUNCATE`.
+**Note:** There is no `IF EXISTS` clause with `TRUNCATE`.
 
 ## Delete Table
-The `DELETE` is a command of **Data Manipulation Language (DML)**, so it does not delete or modify the table structure but it delete the existing records from the table. Therefore, any constraints, indexes, or triggers defined in the table will still exist after you delete data from it.
+- The `DELETE` is a command of **Data Manipulation Language (DML)**, so it does not delete or modify the table structure but it delete the existing records from the table. 
+- Any constraints, indexes, or triggers defined in the table will still exist after you delete data from it.
 - To delete only the specific number of rows from the table, we can use the `WHERE` clause with the `DELETE` statement. 
 - Without `WHERE` clause, All rows in the table will be deleted. 
 
-**Note :** The SQL `DELETE` statement operates on a single table at a time.
+**Note:** The SQL `DELETE` statement operates on a single table at a time.
 
-```bash
-DELETE TABLE tabname;   # Delelte all records of a table 
-DELETE TABLE tabname WHERE [condition];     # Delete specific records of a table based on condition
+```sql
+DELETE TABLE tabname; --Delelte all records of a table 
+DELETE TABLE tabname WHERE [condition]; --Delete specific records of a table based on condition
 ```
 
 ## DROP vs DELETE vs TRUNCATE
@@ -250,34 +257,28 @@ DELETE TABLE tabname WHERE [condition];     # Delete specific records of a table
 
 
 # SQL INSERT INTO Statement
+
+## Inserting data into a table
 The SQL `INSERT INTO` Statement is used to add new rows of data into a table in the database. Almost all the RDBMS provide this SQL query to add the records in database tables
-
-Syntax :
-
 ```sql
-INSERT INTO tabname (col1, col2, col3, ..., colN) VALUES (val1, val2, val3, ..., valN);
+INSERT INTO tabname (col1, col2, col3, ..., colN) VALUES (val1, val2, val3, ..., valN); --insert values of specified columns
+INSERT INTO tabname VALUES (val1, val2, val3, ..., valN);   --insert values of all columns
 ```
 
-If we want to add values of all the columns, 
-
-```sql 
-INSERT INTO tabname VALUES (val1, val2, val3, ..., valN);
-```
-
-## Inserting Data Into a Table Using Another Table
+## Inserting data into a table using another table
 - Using `INSERT INTO ... SELECT` statement
 - Using `INSERT INTO ... TABLE` statement
 
 ### INSERT INTO ... SELECT 
+- Two tables must exist in database
+- Two tables must have similar structures, similar data-type
+- The `SELECT` statement first retrieves the data from an existing table and the `INSERT INTO` statement inserts the retrieved data into another table (if they have same table structures).
 
-```bash
+```sql
 INSERT INTO first_tabname (col1, col2, col3, ..., colN) 
 SELECT (col1, col2, col3, ..., colN) FROM second_tabname 
 WHERE [condition(s)];   #condition is optional
 ```
-
-### Example
-
 ```sql
 -- Create the employees table
 CREATE TABLE employees (
@@ -326,8 +327,8 @@ INSERT INTO first_table_name TABLE second_table_name;
 The SQL `SELECT` Statement is used to fetch the data from a database table which returns this data in the **form of a table**. These tables are called result-sets.
 
 ```sql
-SELECT column1, column2, columnN FROM table_name;
-SELECT * FROM table_name;   --select all data items of the table
+SELECT column1, column2, columnN FROM table_name; --select data from specific columns
+SELECT * FROM table_name; --select all data from all columns
 ```
 ### Aliasing a Column in SELECT Statement
 ```sql
@@ -345,19 +346,7 @@ We can also use `SELECT` statement to perform arithmatic expression.
 SELECT 56*56 AS total;
 ```
 
-# SQL INSERT INTO ... SELECT statement
-- The `SELECT` statement first retrieves the data from an existing table and the `INSERT INTO` statement inserts the retrieved data into another table (if they have same table structures).
-- The source and target tables in the database must exists.
-- The structure of the source and target tables are same.
 
-```sql
-INSERT INTO new_table 
-SELECT (column1, column2, ...columnN) 
-FROM old_table;
-
-INSERT INTO buyers  
-SELECT * FROM customers;    --Both buyers and customers table structure are same
-```
 
 # SQL UPDATE statement
 - The SQL `UPDATE` Statement is used to modify the existing records in a table. - This statement is a part of `Data Manipulation Language (DML)`, as it only modifies the data present in a table without affecting the table's structure.
@@ -368,9 +357,10 @@ SELECT * FROM customers;    --Both buyers and customers table structure are same
 UPDATE table_name
 SET column1 = value1, column2 = value2,..., columnN = valueN
 WHERE [condition];
-
---Update multiple rows and columns
-UPDATE customers SET age = age+5, salary = salary+3000;
+```
+```sql
+UPDATE customers SET age = 50 WHERE id = 6; --update single row
+UPDATE customers SET age = age+5, salary = salary+3000; --Update multiple rows and columns
 ```
 
 
@@ -386,6 +376,7 @@ DELETE FROM table_name WHERE [condition];
 ```sql
 DELETE FROM customers WHERE id = 6;     --delete single row
 DELETE FROM customers WHERE age > 25;   --delete multiple rows
+DELETE FROM customers;                  --delete all rows
 ```
 
 
