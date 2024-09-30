@@ -4,6 +4,7 @@
 - [SQL Table](#sql-tables)
 - [SQL INSERT INTO Statement](#sql-insert-into-statement)
 - [SQL SELEECT statement](#sql-select-statement)
+- [SQL INSERT INTO ... SELECT statement](#sql-insert-into--select-statement)
 - [SQL Wildcards](#sql-wildcards)
 
 # SQL Database
@@ -331,15 +332,30 @@ SELECT * FROM table_name;   --select all data items of the table
 SELECT col1 AS alias1, col2, col3, ...., colN 
 FROM table_name;
 ```
-
 In the example below, we are trying to retrieve `customer details` **NAME** and **AGE** in a single column of the resultant table using the `concat()` expression and aliasing the column as `DETAILS` along with the customer addresses from the CUSTOMERS table.
-
 ```sql
 SELECT CONCAT(name,' ',age) AS details, address 
 FROM customers;
 ```
 
+We can also use `SELECT` statement to perform arithmatic expression. 
+```sql
+SELECT 56*56 AS total;
+```
 
+# SQL INSERT INTO ... SELECT statement
+- The `SELECT` statement first retrieves the data from an existing table and the `INSERT INTO` statement inserts the retrieved data into another table (if they have same table structures).
+- The source and target tables in the database must exists.
+- The structure of the source and target tables are same.
+
+```sql
+INSERT INTO new_table 
+SELECT (column1, column2, ...columnN) 
+FROM old_table;
+
+INSERT INTO buyers  
+SELECT * FROM customers;    --Both buyers and customers table structure are same
+```
 
 
 
