@@ -1,4 +1,4 @@
-### [My SQL Cheat Sheet *](./SQL_cheatsheet.md)
+### [My SQL Cheat Sheet *](./my_cheatsheet.md)
 
 # Standard Query Language (SQL)
 

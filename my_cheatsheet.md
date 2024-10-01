@@ -150,7 +150,6 @@ SELECT * FROM tabname ORDER BY
 ```
 
 ## SQL Operators and Clauses
-
 ### WHERE 
 ```sql
 SELECT * FROM customers WHERE age NOT IN (25, 23, 22);
@@ -167,7 +166,21 @@ SELECT * FROM customers WHERE NOT (salary > 4500 AND age < 26);
 ```sql
 SELECT * FROM customers WHERE NAME NOT LIKE 'K%';
 ```
-
+```sql
+SELECT * FROM customers WHERE salary NOT BETWEEN 1500.00 AND 2500.00;
+```
+```sql
+SELECT * FROM customers WHERE salary IS NOT 2500.00;
+```
+```sql
+SELECT COUNT(*) FROM customers WHERE address IS NOT NULL;
+```
+```sql
+DELETE FROM customers WHERE salary IS NULL;
+```
+```sql
+SELECT * FROM customers WHERE salary BETWEEN 4000 AND 10000 AND address IN ('Hyderabad', 'Bhopal');
+```
 ### DISTINCT
 ```sql
 SELECT DISTINCT salary FROM customers ORDER BY salary;
@@ -178,7 +191,6 @@ SELECT DISTINCT age, salary FROM customers ORDER BY age;
 ```sql
 SELECT COUNT(DISTINCT age) as unique_age  FROM customers;
 ```
-
 ### GROUP BY
 ```sql
 SELECT address, AVG(salary) as avg_salary  FROM customers GROUP BY address;
@@ -209,9 +221,7 @@ GROUP BY address, age
 HAVING total_salary >=5000 
 ORDER BY total_salary DESC;
 ```
-
-## Wildcards
-
+### Wildcards
 | S.No | Statement | Description |
 |------|-----------|-------------|
 | 1 | WHERE SALARY LIKE '200%' | Values that start with 200. |
@@ -221,3 +231,158 @@ ORDER BY total_salary DESC;
 | 5 | WHERE SALARY LIKE '%2' | Values that end with 2. |
 | 6 | WHERE SALARY LIKE '_2%3' | Values that have a 2 in the second position and end with a 3. |
 | 7 | WHERE SALARY LIKE '2___3' | Values in a five-digit number that start with 2 and end with 3. |
+### ANY ALL
+```sql
+Column_name operator [ANY|ALL] (subquery);	-- syntax
+```
+```sql
+SELECT DISTINCT age FROM customers WHERE salary < ANY (SELECT AVG(salary) FROM customers);
+```
+```sql
+SELECT * FROM customers WHERE age = ANY (SELECT age FROM customers WHERE NAME LIKE 'K%');
+```
+```sql
+SELECT * FROM customers WHERE salary <> ALL (SELECT salary FROM customers WHERE age = 25);
+```
+```sql
+SELECT NAME, age, address, salary FROM customers GROUP BY age, salary HAVING salary < ALL (SELECT AVG(salary) FROM customers);
+```
+### EXISTS
+```sql
+SELECT * FROM customers WHERE EXISTS (
+   SELECT price FROM cars WHERE cars.id = customers.id AND price > 2000000
+);
+```
+```sql
+UPDATE customers SET NAME = 'Kushal' WHERE EXISTS (
+   SELECT NAME FROM carsWHERE customers.id = cars.id
+);
+```
+```sql
+DELETE FROM customers WHERE NOT EXISTS (
+   SELECT * FROM cars WHERE cars.id = customers.id AND cars.price = 2250000
+);
+```
+### CASE
+```sql
+-- syntax
+CASE
+   WHEN condition1 THEN statement1,
+   WHEN condition2 THEN statement2,
+   WHEN condition THEN statementN
+   ELSE result
+END;
+```
+```sql
+SELECT name, age,
+CASE 
+	WHEN age > 30 THEN 'Gen X'
+	WHEN age > 25 THEN 'Gen Y'
+	WHEN age > 22 THEN 'Gen Z'
+	ELSE 'Gen Alpha' 
+END AS generation
+FROM customers;
+```
+```sql
+SELECT *, 
+CASE 
+	WHEN salary < 4500 THEN (salary + salary * 25/100) 
+END AS increment 
+FROM customers;
+```
+```sql
+SELECT name, address, 
+   	CASE 
+    	WHEN age < 25 THEN 'Intern'
+      	WHEN age >= 25 and age <= 27 THEN 'Associate Engineer'
+      	ELSE 'Senior Developer'
+   	END as designation
+FROM customers
+WHERE salary >= 2000;
+```
+```sql
+SELECT * FROM customers
+ORDER BY (
+	CASE
+    	WHEN name LIKE 'k%' THEN name
+    	ELSE address
+	END
+);
+```
+```sql
+SELECT 
+	CASE 
+    	WHEN salary <= 4000 THEN 'Lowest paid'
+    	WHEN salary > 4000 AND salary <= 6500 THEN 'Average paid'
+   		ELSE 'Highest paid' 
+    END AS salary_status,
+   	SUM(salary) AS Total
+FROM customers
+GROUP BY 
+   	CASE 
+    	WHEN salary <= 4000 THEN 'Lowest paid'
+      	WHEN salary > 4000 AND salary <= 6500 THEN 'Average paid'
+   		ELSE 'Highest paid'
+	END;
+```
+```sql
+UPDATE customers
+SET salary= 
+	CASE age
+		WHEN 25 THEN 17000
+		WHEN 32 THEN 25000
+		ELSE 12000
+	END;
+```
+```sql
+INSERT INTO customers (ID, name, age, address, salary)
+VALUES (10, 'Viren', 28, 'Varanasi', 
+   CASE 
+      WHEN age >= 25 THEN 23000
+      ELSE 14000
+   END
+);
+```
+### UNION and UNION ALL
+- `UNION` only returns distinct rows 
+- `UNION ALL` returns all the rows present in the tables.
+```sql	
+SELECT column1 , column2 FROM table1 WHERE [condition(s)]	
+[UNION|UNION ALL]	
+SELECT column1 , column2 FROM table2 WHERE [condition(s)]; -- same number of columns with same data-type from both of the tables
+```
+```sql
+SELECT salary FROM customers UNION SELECT amount FROM orders;
+```
+```sql
+SELECT id, 'customer' AS type FROM customers
+UNION
+SELECT oid, 'order' AS type FROM orders;
+```
+```sql
+SELECT id, salary FROM customers WHERE id > 5
+UNION
+SELECT customer_id, amount FROM orders WHERE customer_id > 2 ORDER BY amount;
+```
+```sql
+SELECT  id, name, amount, date FROM customers LEFT JOIN orders ON customers.id = orders.customer_id
+UNION
+SELECT  id, name, amount, date FROM customers RIGHT JOIN orders ON customers.id = orders.customer_id;
+```
+### INTERSECT
+```sql
+SELECT name, age, hobby FROM student_hobby
+INTERSECT 
+SELECT name, age, hobby FROM student;
+```
+```sql
+SELECT name, age, hobby FROM student_hobby WHERE age BETWEEN 25 AND 30
+INTERSECT
+SELECT name, age, hobby FROM student WHERE age NOT BETWEEN 20 AND 30;
+```
+```sql
+SELECT name, age, hobby FROM student_hobby WHERE hobby IN('Cricket')
+INTERSECT
+SELECT name, age, hobby FROM student WHERE hobby IN('Cricket');
+```
+
