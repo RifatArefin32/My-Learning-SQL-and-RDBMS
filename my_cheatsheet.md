@@ -136,7 +136,8 @@ WHERE customers.salary > 2000;  -- delete rows from multiple table
 ```sql
 SELECT * FROM tabname ORDER BY colname ASC;
 SELECT * FROM tabname ORDER BY colname DESC;
-SELECT * FROM tabname ORDER BY col1 DESC, col2 DESC, col32; -- if not specified `ASC` is by default
+SELECT * FROM tabname ORDER BY col1 DESC, col2 DESC, col32; 
+-- Default `ASC`
 ```
 ```sql
 SELECT * FROM tabname ORDER BY 
@@ -158,7 +159,7 @@ SELECT * FROM customers WHERE age NOT IN (25, 23, 22);
 SELECT * FROM customers WHERE name LIKE 'K___%' LIMIT 2;
 ```
 ```sql
-SELECT * FROM customers WHERE (age = 25 OR salary < 4500) AND (name = 'Rifat' OR name = 'Arefin');
+SELECT * FROM customers WHERE (age = 25 OR salary < 4500) AND (name = 'Rifat' OR name = 'Mahim');
 ```
 ```sql
 SELECT * FROM customers WHERE NOT (salary > 4500 AND age < 26);
@@ -179,7 +180,7 @@ SELECT COUNT(*) FROM customers WHERE address IS NOT NULL;
 DELETE FROM customers WHERE salary IS NULL;
 ```
 ```sql
-SELECT * FROM customers WHERE salary BETWEEN 4000 AND 10000 AND address IN ('Hyderabad', 'Bhopal');
+SELECT * FROM customers WHERE salary BETWEEN 4000 AND 10000 AND address IN ('Dhaka', 'Khulna');
 ```
 ### DISTINCT
 ```sql
@@ -196,7 +197,7 @@ SELECT COUNT(DISTINCT age) as unique_age  FROM customers;
 SELECT address, AVG(salary) as avg_salary  FROM customers GROUP BY address;
 ```
 ```sql
-SELECT address, age, SUM(salary) AS total_salary FROM customers GROUP BY address, age;	-- GROUP BY multiple columns
+SELECT address, age, SUM(salary) AS total_salary FROM customers GROUP BY address, age;
 ```
 ```sql
 SELECT age, MIN(salary) AS min_salary FROM customers GROUP BY age ORDER BY min_salary DESC;
@@ -231,7 +232,7 @@ ORDER BY total_salary DESC;
 | 5 | WHERE SALARY LIKE '%2' | Values that end with 2. |
 | 6 | WHERE SALARY LIKE '_2%3' | Values that have a 2 in the second position and end with a 3. |
 | 7 | WHERE SALARY LIKE '2___3' | Values in a five-digit number that start with 2 and end with 3. |
-### ANY ALL
+### ANY or ALL
 ```sql
 Column_name operator [ANY|ALL] (subquery);	-- syntax
 ```
@@ -245,7 +246,8 @@ SELECT * FROM customers WHERE age = ANY (SELECT age FROM customers WHERE NAME LI
 SELECT * FROM customers WHERE salary <> ALL (SELECT salary FROM customers WHERE age = 25);
 ```
 ```sql
-SELECT NAME, age, address, salary FROM customers GROUP BY age, salary HAVING salary < ALL (SELECT AVG(salary) FROM customers);
+SELECT NAME, age, address, salary FROM customers GROUP BY age, salary 
+HAVING salary < ALL (SELECT AVG(salary) FROM customers);
 ```
 ### EXISTS
 ```sql
@@ -349,7 +351,8 @@ VALUES (10, 'Viren', 28, 'Varanasi',
 ```sql	
 SELECT column1 , column2 FROM table1 WHERE [condition(s)]	
 [UNION|UNION ALL]	
-SELECT column1 , column2 FROM table2 WHERE [condition(s)]; -- same number of columns with same data-type from both of the tables
+SELECT column1 , column2 FROM table2 WHERE [condition(s)]; 
+-- same number of columns with same data-type from both of the tables
 ```
 ```sql
 SELECT salary FROM customers UNION SELECT amount FROM orders;
@@ -362,12 +365,13 @@ SELECT oid, 'order' AS type FROM orders;
 ```sql
 SELECT id, salary FROM customers WHERE id > 5
 UNION
-SELECT customer_id, amount FROM orders WHERE customer_id > 2 ORDER BY amount;
+SELECT customer_id, amount FROM orders WHERE customer_id > 2 
+ORDER BY salary;
 ```
 ```sql
-SELECT  id, name, amount, date FROM customers LEFT JOIN orders ON customers.id = orders.customer_id
+SELECT  id, name, amount FROM customers LEFT JOIN orders ON customers.id = orders.customer_id
 UNION
-SELECT  id, name, amount, date FROM customers RIGHT JOIN orders ON customers.id = orders.customer_id;
+SELECT  id, name, amount FROM customers RIGHT JOIN orders ON customers.id = orders.customer_id;
 ```
 ### INTERSECT
 ```sql
