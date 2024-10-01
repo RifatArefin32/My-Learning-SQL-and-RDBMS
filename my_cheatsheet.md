@@ -43,8 +43,8 @@ mysql -u root -p new_dbanme < dbname_backup.sql     # Restore from old database
 ## SQL Table
 ```sql
 CREATE TABLE hall_info (
-	id INT NOT NULL,
-	name VARCHAR (255) NOT NULL UNIQUE,
+	id INTname NULL,
+	name VARCHARname5) NOT NULL UNIQUE,
 	seat INT NOT NULL DEFAULT 0
 	
 	PRIMARY KEY (id)
@@ -390,3 +390,55 @@ INTERSECT
 SELECT name, age, hobby FROM student WHERE hobby IN('Cricket');
 ```
 
+## SQL JOIN Operation
+### Types of JOIN
+- INNER JOIN
+- OUTER JOIN
+	- LEFT JOIN 
+	- RIGHT JOIN
+	- FULL JOIN
+Other Joins
+ - SELF JOIN
+ - CROSS Join
+
+ ```sql
+SELECT id, name, amount, date
+FROM customers 
+INNER JOIN orders ON customer.id = orders.customer_id;
+INNER JOIN employees ON orders.id = employees.id
+WHERE orders.amount >= 20000;
+```
+```sql
+SELECT customers.id, customers.name, orders.date, employee.employee_name
+FROM customers
+LEFT JOIN orders ON customers.id = orders.customer_id
+LEFT JOIN employee ON orders.id = employee.id;
+WHERE orders.amount >= 20000;
+```
+```sql
+SELECT customers.id, customers.name, orders.date, employee.employee_name
+FROM customers
+RIGHT JOIN orders ON customers.id = orders.customer_id
+RIGHT JOIN employee ON orders.id = employee.id;
+WHERE orders.amount >= 20000;
+```
+```sql
+SELECT customers.id, customers.name, orders.date, employee.employee_name
+FROM customers
+FULL JOIN orders ON customers.id = orders.customer_id
+FULL JOIN employee ON orders.id = employee.id;
+WHERE orders.amount >= 20000;
+```
+```sql
+SELECT customers.id, customers.name, orders.date, employee.employee_name
+FROM customers
+CROSS JOIN orders ON customers.id = orders.customer_id
+CROSS JOIN employee ON orders.id = employee.id;
+WHERE orders.amount >= 20000;
+```
+```sql
+SELECT  a.id, b.name as earns_higher, a.name as earns_less, a.salary as lower_salary
+FROM customers a, customers b
+WHERE a.salary < b.salary
+ORDER BY a.salary;
+```
