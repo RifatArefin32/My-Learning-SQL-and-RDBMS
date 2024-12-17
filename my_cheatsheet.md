@@ -5,8 +5,8 @@ CREATE DATABASE IF NOT EXISTS dbname;
 ```
 ```sql
 SHOW DATABASES;
-SHOW DATABASES LIKE '%test%'; --`%` represents one or more characters
-SHOW DATABASES LIKE '_test%'; --`_` represents one or more characters
+SHOW DATABASES LIKE '%test%'; --`%` represents zero, one or more characters
+SHOW DATABASES LIKE '_test%'; --`_` represents only one character
 ```
 ```sql
 USE dbname;
